@@ -20,6 +20,9 @@ ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./AnnovarWebui.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
+USER root
+RUN apt update; apt install -y perl
+USER app
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "AnnovarWebui.dll"]

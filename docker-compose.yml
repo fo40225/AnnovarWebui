@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  annovarwebui:
+    image: ${DOCKER_REGISTRY-}annovarwebui
+    build:
+      context: .
+      dockerfile: AnnovarWebui/Dockerfile

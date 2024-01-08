@@ -6,3 +6,112 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<form id="uploadForm" method="post" enctype="multipart/form-data" asp-action="UploadFile">
+    <input type="file" name="file" id="fileInput" accept=".vcf" />
+
+    <div>
+        <label>Ref Options:</label>
+        <input type="radio" name="cmdOption" value="hg38" checked />hg38
+        <input type="radio" name="cmdOption" value="hg19" />hg19
+    </div>
+
+    <button type="button" id="uploadButton" disabled>Upload</button>
+</form>
+
+<div id="status"></div>
+
+<a id="downloadLink" disabled>Save Result</a>
+
+<script src="/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/myHub")
+        .build();
+
+    document.getElementById("uploadButton").addEventListener("click", () => {
+        event.preventDefault();
+        const fileInput = document.getElementById("fileInput");
+
+        if (fileInput.files.length > 0) {
+            const cmdOption = document.querySelector('input[name="cmdOption"]:checked').value;
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+            formData.append("cmdOption", cmdOption);
+
+            var divStatus = document.getElementById("status");
+            divStatus.innerText = "Start Upload...";
+
+            var uploadUrl = "/Home/UploadFile";
+            fetch(uploadUrl, {
+                method: "POST",
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                divStatus.innerText = "Running annovar...";
+                sessionStorage.setItem("downloadId", data["downloadId"]);
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    });
+
+    connection.start()
+        .then(() => {
+            document.getElementById("uploadButton").disabled = false;
+        })
+        .catch(err => console.error(err));
+
+    connection.on("JobFinish", (downloadId) => {
+        const myDownloadId = sessionStorage.getItem("downloadId");
+        if (myDownloadId == downloadId) {
+            var divStatus = document.getElementById("status");
+            divStatus.innerText = "Annotation done, downloading...";
+
+            const downloadUrl = "/Home/DownloadFile";
+            fetch(downloadUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    downloadId: myDownloadId,
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const contentDisposition = response.headers.get('content-disposition');
+                const filenameKeyValue = contentDisposition.split(';');
+                const filename = filenameKeyValue[1].split('=')[1];
+                var downloadLink = document.getElementById("downloadLink");
+                downloadLink.download = filename;
+                return response.blob();
+            })
+            .then((blob) => {
+                //const blobUrl = URL.createObjectURL(new Blob([blob], { type: "application/text" }));
+                const blobUrl = URL.createObjectURL(blob);
+                var downloadLink = document.getElementById("downloadLink");
+                downloadLink.href = blobUrl;
+                downloadLink.disabled = false;
+
+                var divStatus = document.getElementById("status");
+                divStatus.innerText = "Download finish.";
+
+                const deleteUrl = "/Home/DeleteFile";
+                fetch(deleteUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ downloadId: myDownloadId }),
+                })
+                .catch(error => console.error('Error:', error));
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
+</script>

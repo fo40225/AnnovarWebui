@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnovarWebui", "AnnovarWebui\AnnovarWebui.csproj", "{F1EDE3C6-3FB7-403E-B0EF-509AFF819DB5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnnovarWebui", "AnnovarWebui\AnnovarWebui.csproj", "{8C785718-07AF-49E8-A8C8-6DB2E0F9F2A6}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{36E9BA09-BC0B-4605-93D1-F7C3CE39F454}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +13,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F1EDE3C6-3FB7-403E-B0EF-509AFF819DB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1EDE3C6-3FB7-403E-B0EF-509AFF819DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1EDE3C6-3FB7-403E-B0EF-509AFF819DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1EDE3C6-3FB7-403E-B0EF-509AFF819DB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C785718-07AF-49E8-A8C8-6DB2E0F9F2A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C785718-07AF-49E8-A8C8-6DB2E0F9F2A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C785718-07AF-49E8-A8C8-6DB2E0F9F2A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C785718-07AF-49E8-A8C8-6DB2E0F9F2A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36E9BA09-BC0B-4605-93D1-F7C3CE39F454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E9BA09-BC0B-4605-93D1-F7C3CE39F454}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E9BA09-BC0B-4605-93D1-F7C3CE39F454}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E9BA09-BC0B-4605-93D1-F7C3CE39F454}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DE31AD61-DD42-41B7-825D-DF4A57EA109A}
+		SolutionGuid = {40D8F949-1A81-4D6C-AFC2-23E2945CB85D}
 	EndGlobalSection
 EndGlobal
