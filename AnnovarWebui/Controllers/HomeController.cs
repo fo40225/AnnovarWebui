@@ -50,7 +50,7 @@ namespace AnnovarWebui.Controllers
                     await file.CopyToAsync(stream);
                 }
 
-                var command = $"perl $ANNOVAR_PATH/table_annovar.pl {file.FileName} $ANNOVAR_PATH/humandb/ --outfile {Path.GetFileNameWithoutExtension(file.FileName)} --buildver {cmdOption} --protocol refGene,1000g2015aug_all,1000g2015aug_afr,1000g2015aug_amr,1000g2015aug_eas,1000g2015aug_eur,1000g2015aug_sas,exac03,esp6500siv2_all,esp6500siv2_aa,esp6500siv2_ea,nci60,avsnp147,cosmic70,clinvar_20221231,dbnsfp42a,gnomad400_exome,gnomad400_genome,dbscsnv11,rmsk,ensGene,knownGene,regsnpintron,gene4denovo201907,icgc28 --operation g,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,r,g,g,f,f,f --vcfinput --otherinfo --thread 4 --maxgenethread 4";
+                var command = $"perl $ANNOVAR_PATH/table_annovar.pl {file.FileName} $ANNOVAR_PATH/humandb/ --outfile {Path.GetFileNameWithoutExtension(file.FileName)} --buildver {cmdOption} --protocol refGene,1000g2015aug_all,1000g2015aug_afr,1000g2015aug_amr,1000g2015aug_eas,1000g2015aug_eur,1000g2015aug_sas,exac03,esp6500siv2_all,esp6500siv2_aa,esp6500siv2_ea,nci60,avsnp147,cosmic70,clinvar_20240611,dbnsfp47a,gnomad_exome,gnomad_genome,dbscsnv11,rmsk,ensGene,knownGene,kaviar_20150923,hrcr1,regsnpintron,gene4denovo201907,icgc28,refGeneWithVer,gnomad41_exome,gnomad41_genome --operation g,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,f,r,g,g,f,f,f,f,f,g,f,f --vcfinput --otherinfo --thread 4 --maxgenethread 4 --mingenelinecount 1";
                 var process = new Process
                 {
                     StartInfo = new ProcessStartInfo
